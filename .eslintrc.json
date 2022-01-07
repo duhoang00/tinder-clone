@@ -1,3 +1,27 @@
 {
-  "extends": "next/core-web-vitals"
+  "extends": "next/core-web-vitals",
+  "rules": {
+    "array-bracket-newline": "off",
+    "array-bracket-spacing": ["error", "never"],
+    "array-callback-return": "error",
+    "arrow-spacing": ["error", { "after": true, "before": true }],
+    "comma-spacing": ["error", { "after": true, "before": false }],
+    "linebreak-style": ["error", "unix"],
+    "newline-after-var": "off",
+    "newline-before-return": "off",
+    "no-whitespace-before-property": "error",
+    "object-curly-newline": "error",
+    "object-curly-spacing": ["error", "always"],
+    "object-shorthand": "error",
+    "one-var": "off",
+    "one-var-declaration-per-line": "error",
+    "operator-assignment": "error",
+    "operator-linebreak": ["error", null],
+    "space-before-blocks": "error",
+    "space-before-function-paren": "off",
+    "space-in-parens": ["error", "never"],
+    "no-useless-escape": "off",
+    "react-hooks/rules-of-hooks": "warn",
+    "react-hooks/exhaustive-deps": "warn"
+  }
 }
