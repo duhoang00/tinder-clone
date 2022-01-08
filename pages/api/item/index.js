@@ -9,8 +9,9 @@ app.get("/api", (req, res) => {
   res.end(`Hello! Go to item: <a href="${path}">${path}</a>`);
 });
 
-app.get("/api/:item", (req, res) => {
-  res.end(`hehe`);
+app.get("/api/item", (req, res) => {
+  console.log("api called");
+  res.end(`hehe item/index`);
 });
 
 app.get("/api/item/:slug", (req, res) => {
