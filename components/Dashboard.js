@@ -1,40 +1,63 @@
-import { useState } from "react";
-import {
-  Card,
-  Row,
-  Col,
-  Carousel,
-  Button,
-  Tooltip,
-  // Image,
-  Typography,
-} from "antd";
+import { useEffect, useMemo, useState } from "react";
+import { Card, Row, Col, Carousel, Button, Tooltip, Typography } from "antd";
 import { HeartFilled, CloseOutlined } from "@ant-design/icons";
 import Image from "next/image";
+import { isEmpty } from "lodash";
 
 import styles from "./Dashboard.module.less";
 
 const { Title } = Typography;
 
 const Dashboard = () => {
-  const UserInfo = ({ name, age }) => {
+  const [page, setPage] = useState(1);
+  const [userList, setUserList] = useState([]);
+
+  useEffect(() => {
+    async function fetchData() {
+      const response = await fetch(
+        `https://dummyapi.io/data/v1/user?page=${page}&limit=1`,
+        {
+          headers: {
+            "app-id": "61d94547b966a2362cf320d4",
+          },
+        }
+      ).catch(function (error) {
+        console.log("Request failed", error);
+      });
+      const data = await response.json();
+      if (!isEmpty(data?.data)) {
+        setUserList(data.data);
+      }
+    }
+    fetchData();
+  }, [page]);
+
+  console.log({ userList });
+
+  const UserInfo = ({ firstName, lastName, age }) => {
     return (
       <div className="user-info">
-        <Title level={1}>{name}</Title>
+        <Title level={1}>
+          {firstName} {lastName}
+        </Title>
         <Title level={4}>{age}</Title>
       </div>
     );
   };
+
   return (
     <div className={styles.dashboard}>
       <Carousel dotPosition={"top"}>
-        <div>
-          <Image alt="Someone image" layout="fill" src={"/taylor-swift.jpg"} />
-          <UserInfo name="Taylor Swift" age="32" />
-        </div>
-        <div>
-          <Image alt="Someone image" layout="fill" src={"/selena.jpg"} />
-        </div>
+        {userList.map((user) => (
+          <div key={user?.id}>
+            <Image src={user?.picture} alt="A user profile" layout="fill" />
+            <UserInfo
+              firstName={user?.firstName}
+              lastName={user?.lastName}
+              age={user.age}
+            />
+          </div>
+        ))}
       </Carousel>
       <Row justify="center" align="bottom">
         <Col>
