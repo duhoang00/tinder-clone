@@ -4,13 +4,13 @@ import {
   Row,
   Col,
   Carousel,
-  Radio,
   Button,
   Tooltip,
-  Image,
+  // Image,
   Typography,
 } from "antd";
 import { HeartFilled, CloseOutlined } from "@ant-design/icons";
+import Image from "next/image";
 
 import styles from "./Dashboard.module.less";
 
@@ -27,25 +27,15 @@ const Dashboard = () => {
   };
   return (
     <div className={styles.dashboard}>
-      <Row>
-        <Col>
-          <Card>
-            <Carousel dotPosition={"top"}>
-              <div>
-                <h3>
-                  <Image alt="Someone image" src="taylor-swift.jpg" />
-                </h3>
-                <UserInfo name="Taylor Swift" age="32" />
-              </div>
-              <div>
-                <h3>
-                  <Image alt="Someone image" src="selena.jpg" />
-                </h3>
-              </div>
-            </Carousel>
-          </Card>
-        </Col>
-      </Row>
+      <Carousel dotPosition={"top"}>
+        <div>
+          <Image alt="Someone image" layout="fill" src={"/taylor-swift.jpg"} />
+          <UserInfo name="Taylor Swift" age="32" />
+        </div>
+        <div>
+          <Image alt="Someone image" layout="fill" src={"/selena.jpg"} />
+        </div>
+      </Carousel>
       <Row justify="center" align="bottom">
         <Col>
           <Tooltip title="Pass">
