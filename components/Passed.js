@@ -1,40 +1,44 @@
-import { Row, Col, Card, Table } from "antd";
+import { useMemo } from "react";
+import { Table } from "antd";
 
 import styles from "./Passed.module.less";
 
 const Passed = () => {
-  const likedList = localStorage.getItem("liked");
-  console.log(JSON.parse(likedList));
+  const passedList = JSON.parse(localStorage.getItem("passed"));
 
-  const dataSource = [
-    {
-      key: "1",
-      name: "Mike",
-      age: 32,
-    },
-    {
-      key: "2",
-      name: "John",
-      age: 42,
-    },
-  ];
+  const dataSource = useMemo(() => {
+    if (!passedList) {
+      return [];
+    }
+    return passedList.map((profile) => ({
+      id: profile.id,
+      name: `${profile.firstName} ${profile.lastName}`,
+      age: profile.age,
+    }));
+  }, [passedList]);
 
   const columns = [
     {
-      title: "Name",
+      title: "Full name",
       dataIndex: "name",
       key: "name",
+      align: "center",
     },
     {
       title: "Age",
       dataIndex: "age",
       key: "age",
+      align: "center",
     },
   ];
 
   return (
     <div className={styles.passed}>
-      <Table dataSource={dataSource} columns={columns} />
+      <Table
+        dataSource={dataSource}
+        columns={columns}
+        rowKey={(row) => row.id}
+      />
     </div>
   );
 };

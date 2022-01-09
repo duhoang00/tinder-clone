@@ -1,40 +1,44 @@
-import { Row, Col, Card, Table } from "antd";
+import { useMemo } from "react";
+import { Table } from "antd";
 
 import styles from "./Liked.module.less";
 
 const Liked = () => {
-  const likedList = localStorage.getItem("liked");
-  console.log(JSON.parse(likedList));
+  const likedList = JSON.parse(localStorage.getItem("liked"));
 
-  const dataSource = [
-    {
-      key: "1",
-      name: "Mike",
-      age: 32,
-    },
-    {
-      key: "2",
-      name: "John",
-      age: 42,
-    },
-  ];
+  const dataSource = useMemo(() => {
+    if (!likedList) {
+      return [];
+    }
+    return likedList.map((profile) => ({
+      id: profile.id,
+      name: `${profile.firstName} ${profile.lastName}`,
+      age: profile.age,
+    }));
+  }, [likedList]);
 
   const columns = [
     {
-      title: "Name",
+      title: "Full name",
       dataIndex: "name",
       key: "name",
+      align: "center",
     },
     {
       title: "Age",
       dataIndex: "age",
       key: "age",
+      align: "center",
     },
   ];
 
   return (
     <div className={styles.liked}>
-      <Table dataSource={dataSource} columns={columns} />
+      <Table
+        dataSource={dataSource}
+        columns={columns}
+        rowKey={(row) => row.id}
+      />
     </div>
   );
 };

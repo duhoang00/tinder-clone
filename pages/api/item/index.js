@@ -2,7 +2,6 @@ const app = require("express")();
 const { v4 } = require("uuid");
 
 app.get("/api", (req, res) => {
-  console.log("api called");
   const path = `/api/item/${v4()}`;
   res.setHeader("Content-Type", "text/html");
   res.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate");
@@ -10,7 +9,6 @@ app.get("/api", (req, res) => {
 });
 
 app.get("/api/item", (req, res) => {
-  console.log("api called");
   res.end(`hehe item/index`);
 });
 

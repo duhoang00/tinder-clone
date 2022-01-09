@@ -70,29 +70,27 @@ const Dashboard = () => {
     );
   };
 
-  const userProfileReact = async (reactType) => {
-    const setNextProfile = () => {
-      const nextProfileNumber = currentProfile.profileNumber + 1;
-      if (nextProfileNumber < profileList.length) {
-        setCurrentProfile({
-          ...profileList[nextProfileNumber],
-          profileNumber: nextProfileNumber,
-        });
-      } else {
-        setPage(page + 1);
-      }
-    };
+  const userProfileReact = (reactType) => {
     if (reactType === "like") {
-      await setLikedList([...likedList, { ...currentProfile }]);
-      console.log({ likedList });
-      localStorage.setItem("liked", JSON.stringify(likedList));
+      setLikedList([...likedList, { ...currentProfile }]);
     } else if (reactType === "pass") {
-      await setPassedList([...passedList, { ...currentProfile }]);
-      console.log({ passedList });
-      localStorage.setItem("passed", JSON.stringify(passedList));
+      setPassedList([...passedList, { ...currentProfile }]);
     }
-    setNextProfile();
+    const nextProfileNumber = currentProfile.profileNumber + 1;
+    if (nextProfileNumber < profileList.length) {
+      setCurrentProfile({
+        ...profileList[nextProfileNumber],
+        profileNumber: nextProfileNumber,
+      });
+    } else {
+      setPage(page + 1);
+    }
   };
+
+  useEffect(() => {
+    localStorage.setItem("liked", JSON.stringify(likedList));
+    localStorage.setItem("passed", JSON.stringify(passedList));
+  }, [likedList, passedList]);
 
   return (
     <div className={styles.dashboard}>
@@ -100,7 +98,8 @@ const Dashboard = () => {
         {currentProfile && (
           <div key={currentProfile.id}>
             <Image
-              src={currentProfile.picture ?? "/404.jpg"}
+              // src={currentProfile.picture ?? "/404.jpg"}
+              src={"/selena.jpg"}
               alt="A user profile"
               layout="fill"
             />
