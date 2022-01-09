@@ -1,15 +1,11 @@
 import { useRouter } from "next/router";
 
 import { Row, Col, Button, Tooltip } from "antd";
-import {
-  FireFilled,
-  LikeFilled,
-  UserOutlined,
-  DislikeFilled,
-} from "@ant-design/icons";
+import { FireFilled, LikeFilled, DislikeFilled } from "@ant-design/icons";
 
 const MenuList = () => {
   const router = useRouter();
+  const { index } = router.query;
 
   return (
     <Row>
@@ -22,6 +18,7 @@ const MenuList = () => {
             onClick={() => {
               router.push("/passed");
             }}
+            danger={index === "passed"}
           ></Button>
         </Tooltip>
       </Col>
@@ -34,6 +31,7 @@ const MenuList = () => {
             onClick={() => {
               router.push("/");
             }}
+            danger={index === "dashboard"}
           ></Button>
         </Tooltip>
       </Col>
@@ -46,6 +44,7 @@ const MenuList = () => {
             onClick={() => {
               router.push("/liked");
             }}
+            danger={index === "liked"}
           ></Button>
         </Tooltip>
       </Col>
