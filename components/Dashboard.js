@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Card, Row, Col, Button, Tooltip, Typography, Spin } from "antd";
 import { HeartFilled, CloseOutlined } from "@ant-design/icons";
 import Image from "next/image";
+import { isEmpty } from "lodash";
 
 import styles from "./Dashboard.module.less";
 
@@ -88,8 +89,12 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
-    localStorage.setItem("liked", JSON.stringify(likedList));
-    localStorage.setItem("passed", JSON.stringify(passedList));
+    if (!isEmpty(likedList)) {
+      localStorage.setItem("liked", JSON.stringify(likedList));
+    }
+    if (!isEmpty(passedList)) {
+      localStorage.setItem("passed", JSON.stringify(passedList));
+    }
   }, [likedList, passedList]);
 
   return (
