@@ -70,8 +70,7 @@ const Dashboard = () => {
     );
   };
 
-  const userProfileReact = (reactType) => {
-    console.log({ currentProfile });
+  const userProfileReact = async (reactType) => {
     const setNextProfile = () => {
       const nextProfileNumber = currentProfile.profileNumber + 1;
       if (nextProfileNumber < profileList.length) {
@@ -84,12 +83,15 @@ const Dashboard = () => {
       }
     };
     if (reactType === "like") {
-      setLikedList([...likedList, { ...currentProfile }]);
-      setNextProfile();
+      await setLikedList([...likedList, { ...currentProfile }]);
+      console.log({ likedList });
+      localStorage.setItem("liked", JSON.stringify(likedList));
     } else if (reactType === "pass") {
-      setPassedList([...passedList, { ...currentProfile }]);
-      setNextProfile();
+      await setPassedList([...passedList, { ...currentProfile }]);
+      console.log({ passedList });
+      localStorage.setItem("passed", JSON.stringify(passedList));
     }
+    setNextProfile();
   };
 
   return (
