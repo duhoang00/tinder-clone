@@ -1,8 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
-import { Card, Row, Col, Carousel, Button, Tooltip, Typography } from "antd";
+import { Card, Row, Col, Button, Tooltip, Typography, Spin } from "antd";
 import { HeartFilled, CloseOutlined } from "@ant-design/icons";
 import Image from "next/image";
-import { isEmpty } from "lodash";
 
 import styles from "./Dashboard.module.less";
 
@@ -10,59 +9,108 @@ const { Title } = Typography;
 
 const Dashboard = () => {
   const [page, setPage] = useState(1);
-  const [userList, setUserList] = useState([]);
+  const [profileList, setProfileList] = useState([]);
+  const [currentProfile, setCurrentProfile] = useState({});
+  const [likedList, setLikedList] = useState([]);
+  const [passedList, setPassedList] = useState([]);
 
   useEffect(() => {
-    async function fetchData() {
+    const getUserList = async () => {
       const response = await fetch(
-        `https://dummyapi.io/data/v1/user?page=${page}&limit=1`,
+        `https://dummyapi.io/data/v1/user?page=${page}&limit=10`,
         {
           headers: {
             "app-id": "61d94547b966a2362cf320d4",
           },
         }
-      ).catch(function (error) {
-        console.log("Request failed", error);
-      });
+      );
       const data = await response.json();
-      if (!isEmpty(data?.data)) {
-        setUserList(data.data);
-      }
-    }
-    fetchData();
+      const profileList = data.data;
+      setProfileList(profileList);
+      setCurrentProfile({ ...profileList[0], profileNumber: 0 });
+    };
+    getUserList();
   }, [page]);
 
-  console.log({ userList });
+  useEffect(() => {
+    if (currentProfile && !currentProfile.age) {
+      const updateCurrentProfileAge = async () => {
+        const response = await fetch(
+          `https://dummyapi.io/data/v1/user/${currentProfile?.id}`,
+          {
+            headers: {
+              "app-id": "61d94547b966a2362cf320d4",
+            },
+          }
+        );
+        const data = await response.json();
+        const dob = data?.dateOfBirth;
+        const diffTime = Math.abs(new Date() - new Date(dob));
+        const age = Math.ceil(diffTime / (1000 * 60 * 60 * 24 * 365));
+        if (age) {
+          setCurrentProfile({ ...currentProfile, age });
+        }
+      };
+      updateCurrentProfileAge();
+    }
+  }, [currentProfile]);
 
-  const UserInfo = ({ firstName, lastName, age }) => {
+  const UserInfo = () => {
     return (
-      <div className="user-info">
-        <Title level={1}>
-          {firstName} {lastName}
-        </Title>
-        <Title level={4}>{age}</Title>
-      </div>
+      currentProfile && (
+        <div className="user-info">
+          <Title level={4}>
+            {currentProfile.firstName} {currentProfile.lastName}
+          </Title>
+          <Title level={5}>
+            {currentProfile.age ?? <Spin size="small"></Spin>}
+          </Title>
+        </div>
+      )
     );
+  };
+
+  const userProfileReact = (reactType) => {
+    console.log({ currentProfile });
+    const setNextProfile = () => {
+      const nextProfileNumber = currentProfile.profileNumber + 1;
+      if (nextProfileNumber < profileList.length) {
+        setCurrentProfile({
+          ...profileList[nextProfileNumber],
+          profileNumber: nextProfileNumber,
+        });
+      } else {
+        setPage(page + 1);
+      }
+    };
+    if (reactType === "like") {
+      setLikedList([...likedList, { ...currentProfile }]);
+      setNextProfile();
+    } else if (reactType === "pass") {
+      setPassedList([...passedList, { ...currentProfile }]);
+      setNextProfile();
+    }
   };
 
   return (
     <div className={styles.dashboard}>
-      <Carousel dotPosition={"top"}>
-        {userList.map((user) => (
-          <div key={user?.id}>
-            <Image src={user?.picture} alt="A user profile" layout="fill" />
-            <UserInfo
-              firstName={user?.firstName}
-              lastName={user?.lastName}
-              age={user.age}
+      <Card bordered={false}>
+        {currentProfile && (
+          <div key={currentProfile.id}>
+            <Image
+              src={currentProfile.picture ?? "/404.jpg"}
+              alt="A user profile"
+              layout="fill"
             />
+            <UserInfo />
           </div>
-        ))}
-      </Carousel>
+        )}
+      </Card>
       <Row justify="center" align="bottom">
         <Col>
           <Tooltip title="Pass">
             <Button
+              onClick={() => userProfileReact("pass")}
               shape="circle"
               size="large"
               icon={
@@ -83,6 +131,7 @@ const Dashboard = () => {
         <Col>
           <Tooltip title="Like">
             <Button
+              onClick={() => userProfileReact("like")}
               shape="circle"
               size="large"
               icon={

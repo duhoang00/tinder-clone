@@ -1,16 +1,12 @@
-import Head from "next/head";
-import Image from "next/image";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 
-import Dashboard from "../components/Dashboard";
-import MenuList from "../components/MenuList";
+const Home = () => {
+  const router = useRouter();
+  useEffect(() => {
+    router.push("/[index]", "/dashboard");
+  }, [router]);
+  return null;
+};
 
-import styles from "../styles/Home.module.css";
-
-export default function Home() {
-  return (
-    <div className={styles.container}>
-      <MenuList />
-      <Dashboard />
-    </div>
-  );
-}
+export default Home;

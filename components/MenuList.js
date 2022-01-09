@@ -1,34 +1,51 @@
+import { useRouter } from "next/router";
+
 import { Row, Col, Button, Tooltip } from "antd";
-import { FireFilled, LikeFilled, UserOutlined } from "@ant-design/icons";
+import {
+  FireFilled,
+  LikeFilled,
+  UserOutlined,
+  DislikeFilled,
+} from "@ant-design/icons";
 
 const MenuList = () => {
+  const router = useRouter();
+
   return (
     <Row>
-      <Col span={8} style={{ textAlign: "right" }}>
-        <Tooltip title="Liked">
+      <Col span={10} style={{ textAlign: "right" }}>
+        <Tooltip title="Passed">
           <Button
-            icon={<LikeFilled style={{ fontSize: "45px" }} />}
+            icon={<DislikeFilled style={{ fontSize: "45px" }} />}
             size="large"
             type="link"
+            onClick={() => {
+              router.push("/passed");
+            }}
           ></Button>
         </Tooltip>
       </Col>
-      <Col span={8} style={{ textAlign: "center" }}>
+      <Col span={4} style={{ textAlign: "center" }}>
         <Tooltip title="Dashboard">
           <Button
             icon={<FireFilled style={{ fontSize: "45px" }} />}
             size="large"
             type="link"
-            danger
+            onClick={() => {
+              router.push("/");
+            }}
           ></Button>
         </Tooltip>
       </Col>
-      <Col span={8} style={{ textAlign: "left" }}>
-        <Tooltip title="User">
+      <Col span={10} style={{ textAlign: "left" }}>
+        <Tooltip title="Liked">
           <Button
-            icon={<UserOutlined style={{ fontSize: "45px" }} />}
+            icon={<LikeFilled style={{ fontSize: "45px" }} />}
             size="large"
             type="link"
+            onClick={() => {
+              router.push("/liked");
+            }}
           ></Button>
         </Tooltip>
       </Col>
