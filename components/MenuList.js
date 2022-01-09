@@ -12,7 +12,9 @@ const MenuList = () => {
       <Col span={10} style={{ textAlign: "right" }}>
         <Tooltip title="Passed">
           <Button
-            icon={<DislikeFilled style={{ fontSize: "45px" }} />}
+            icon={
+              <DislikeFilled style={{ fontSize: "45px", height: "auto" }} />
+            }
             size="large"
             type="link"
             onClick={() => {
@@ -25,7 +27,7 @@ const MenuList = () => {
       <Col span={4} style={{ textAlign: "center" }}>
         <Tooltip title="Dashboard">
           <Button
-            icon={<FireFilled style={{ fontSize: "45px" }} />}
+            icon={<FireFilled style={{ fontSize: "45px", height: "auto" }} />}
             size="large"
             type="link"
             onClick={() => {
@@ -35,10 +37,10 @@ const MenuList = () => {
           ></Button>
         </Tooltip>
       </Col>
-      <Col span={10} style={{ textAlign: "left" }}>
+      <Col span={10} style={{ textAlign: "left", height: "auto" }}>
         <Tooltip title="Liked">
           <Button
-            icon={<LikeFilled style={{ fontSize: "45px" }} />}
+            icon={<LikeFilled style={{ fontSize: "45px", height: "auto" }} />}
             size="large"
             type="link"
             onClick={() => {
