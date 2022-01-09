@@ -98,8 +98,7 @@ const Dashboard = () => {
         {currentProfile && (
           <div key={currentProfile.id}>
             <Image
-              // src={currentProfile.picture ?? "/404.jpg"}
-              src={"/selena.jpg"}
+              src={currentProfile.picture ?? "/404.jpg"}
               alt="A user profile"
               layout="fill"
             />
