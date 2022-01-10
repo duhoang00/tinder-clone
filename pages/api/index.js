@@ -1,23 +1,19 @@
 const express = require("express");
-const cors = require("cors");
 const bodyParser = require("body-parser");
+
 import connectToDb from "./dbConnect";
 
-import { v4 } from "uuid";
-
 const app = express();
-app.use(cors());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
 
 const userRouter = require("./user");
-
-connectToDb();
+const userReactRouter = require("./userreact");
 
 app.get("/api", (req, res) => {
-  console.log("api called");
+  connectToDb();
+  return null;
 });
 
 app.use(userRouter);
+app.use(userReactRouter);
 
 module.exports = app;

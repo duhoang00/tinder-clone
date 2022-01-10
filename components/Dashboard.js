@@ -15,10 +15,15 @@ const Dashboard = () => {
   const [likedList, setLikedList] = useState([]);
   const [passedList, setPassedList] = useState([]);
 
+  // var xhr = new XMLHttpRequest();
+
+  const LOCAL_HOST = "http://localhost:3000";
+  const PROD_HOST = "https://tinder-clone-duhoang.vercel.app";
+
   useEffect(() => {
     const getUserList = async () => {
-      const url = `https://tinder-clone-duhoang.vercel.app/api/user?page=${page}`;
-      // const url = `http://localhost:3000/api/user?page=${page}`;
+      const url = `${PROD_HOST}/api/user?page=${page}`;
+      // const url = `${LOCAL_HOST}/api/user?page=${page}`;
       const response = await fetch(url, {});
       const data = await response.json();
       const profileList = data.map((profile) => {
@@ -46,9 +51,19 @@ const Dashboard = () => {
     );
   };
 
-  const userProfileReact = (reactType) => {
+  const userProfileReact = async (reactType) => {
     // if (reactType === "like") {
     //   setLikedList([...likedList, { ...currentProfile }]);
+    // } else if (reactType === "pass") {
+    //   setPassedList([...passedList, { ...currentProfile }]);
+    // }
+
+    // if (reactType === "like") {
+    //   const url = `${LOCAL_HOST}/api/userreact/like?profileid=${currentProfile.user_id}`;
+    //   console.log({ url });
+    //   xhr.open("PATCH", url, true);
+    //   xhr.setRequestHeader("Content-Type", "application/json");
+    //   xhr.send(null);
     // } else if (reactType === "pass") {
     //   setPassedList([...passedList, { ...currentProfile }]);
     // }
@@ -64,14 +79,14 @@ const Dashboard = () => {
     }
   };
 
-  useEffect(() => {
-    if (!isEmpty(likedList)) {
-      localStorage.setItem("liked", JSON.stringify(likedList));
-    }
-    if (!isEmpty(passedList)) {
-      localStorage.setItem("passed", JSON.stringify(passedList));
-    }
-  }, [likedList, passedList]);
+  // useEffect(() => {
+  //   if (!isEmpty(likedList)) {
+  //     localStorage.setItem("liked", JSON.stringify(likedList));
+  //   }
+  //   if (!isEmpty(passedList)) {
+  //     localStorage.setItem("passed", JSON.stringify(passedList));
+  //   }
+  // }, [likedList, passedList]);
 
   return (
     <div className={styles.dashboard}>
