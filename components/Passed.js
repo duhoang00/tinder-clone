@@ -12,7 +12,7 @@ const Passed = () => {
     }
     return passedList.map((profile) => ({
       id: profile.id,
-      name: `${profile.firstName} ${profile.lastName}`,
+      name: `${profile.first_name} ${profile.last_name}`,
       age: profile.age,
     }));
   }, [passedList]);
@@ -37,7 +37,7 @@ const Passed = () => {
       <Table
         dataSource={dataSource}
         columns={columns}
-        rowKey={(row) => row.id}
+        rowKey={(row) => row.user_id}
       />
     </div>
   );

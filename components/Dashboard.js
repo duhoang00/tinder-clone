@@ -17,13 +17,14 @@ const Dashboard = () => {
 
   // var xhr = new XMLHttpRequest();
 
-  const LOCAL_HOST = "http://localhost:3000";
-  const PROD_HOST = "https://tinder-clone-duhoang.vercel.app";
+  const HOST =
+    process.env.NODE_ENV === "production"
+      ? "https://tinder-clone-duhoang.vercel.app"
+      : "http://localhost:3000";
 
   useEffect(() => {
     const getUserList = async () => {
-      const url = `${PROD_HOST}/api/user?page=${page}`;
-      // const url = `${LOCAL_HOST}/api/user?page=${page}`;
+      const url = `${HOST}/api/user?page=${page}`;
       const response = await fetch(url, {});
       const data = await response.json();
       const profileList = data.map((profile) => {
@@ -36,7 +37,7 @@ const Dashboard = () => {
       setCurrentProfile({ ...profileList[0], profileNumber: 0 });
     };
     getUserList();
-  }, [page]);
+  }, [HOST, page]);
 
   const UserInfo = () => {
     return (
@@ -52,14 +53,15 @@ const Dashboard = () => {
   };
 
   const userProfileReact = async (reactType) => {
-    // if (reactType === "like") {
-    //   setLikedList([...likedList, { ...currentProfile }]);
-    // } else if (reactType === "pass") {
-    //   setPassedList([...passedList, { ...currentProfile }]);
-    // }
+    console.log({ currentProfile });
+    if (reactType === "like") {
+      setLikedList([...likedList, { ...currentProfile }]);
+    } else if (reactType === "pass") {
+      setPassedList([...passedList, { ...currentProfile }]);
+    }
 
     // if (reactType === "like") {
-    //   const url = `${LOCAL_HOST}/api/userreact/like?profileid=${currentProfile.user_id}`;
+    //   const url = `${HOST}/api/userreact/like?profileid=${currentProfile.user_id}`;
     //   console.log({ url });
     //   xhr.open("PATCH", url, true);
     //   xhr.setRequestHeader("Content-Type", "application/json");
@@ -79,14 +81,14 @@ const Dashboard = () => {
     }
   };
 
-  // useEffect(() => {
-  //   if (!isEmpty(likedList)) {
-  //     localStorage.setItem("liked", JSON.stringify(likedList));
-  //   }
-  //   if (!isEmpty(passedList)) {
-  //     localStorage.setItem("passed", JSON.stringify(passedList));
-  //   }
-  // }, [likedList, passedList]);
+  useEffect(() => {
+    if (!isEmpty(likedList)) {
+      localStorage.setItem("liked", JSON.stringify(likedList));
+    }
+    if (!isEmpty(passedList)) {
+      localStorage.setItem("passed", JSON.stringify(passedList));
+    }
+  }, [likedList, passedList]);
 
   return (
     <div className={styles.dashboard}>

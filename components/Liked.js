@@ -12,7 +12,7 @@ const Liked = () => {
     }
     return likedList.map((profile) => ({
       id: profile.id,
-      name: `${profile.firstName} ${profile.lastName}`,
+      name: `${profile.first_name} ${profile.last_name}`,
       age: profile.age,
     }));
   }, [likedList]);
@@ -37,7 +37,7 @@ const Liked = () => {
       <Table
         dataSource={dataSource}
         columns={columns}
-        rowKey={(row) => row.id}
+        rowKey={(row) => row.user_id}
       />
     </div>
   );
