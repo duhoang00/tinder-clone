@@ -10,7 +10,8 @@ const userReactRouter = require("./userreact");
 
 app.get("/api", (req, res) => {
   connectToDb();
-  return null;
+
+  res.end();
 });
 
 app.use(userRouter);
