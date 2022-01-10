@@ -53,7 +53,6 @@ const Dashboard = () => {
   };
 
   const userProfileReact = async (reactType) => {
-    console.log({ currentProfile });
     if (reactType === "like") {
       setLikedList([...likedList, { ...currentProfile }]);
     } else if (reactType === "pass") {
@@ -62,7 +61,6 @@ const Dashboard = () => {
 
     // if (reactType === "like") {
     //   const url = `${HOST}/api/userreact/like?profileid=${currentProfile.user_id}`;
-    //   console.log({ url });
     //   xhr.open("PATCH", url, true);
     //   xhr.setRequestHeader("Content-Type", "application/json");
     //   xhr.send(null);
