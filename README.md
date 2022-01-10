@@ -1,7 +1,8 @@
 ## Technologies
 
-NextJS + ExpressJS API + mongodb for Vercel
-AntDesign
+1. NextJS + ExpressJS API + mongoDB for Vercel
+2. ReactJS
+3. AntDesign
 
 ## Current issues
 
