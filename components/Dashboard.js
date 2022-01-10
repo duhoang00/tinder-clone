@@ -18,6 +18,7 @@ const Dashboard = () => {
   useEffect(() => {
     const getUserList = async () => {
       const url = `https://tinder-clone-duhoang.vercel.app/api/user?page=${page}`;
+      // const url = `http://localhost:3000/api/user?page=${page}`;
       const response = await fetch(url, {});
       const data = await response.json();
       const profileList = data.map((profile) => {
