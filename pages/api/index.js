@@ -8,9 +8,9 @@ const app = express();
 const userRouter = require("./user");
 const userReactRouter = require("./userreact");
 
-app.get("/api", (req, res) => {
-  connectToDb();
+connectToDb();
 
+app.get("/api", (req, res) => {
   res.end();
 });
 
