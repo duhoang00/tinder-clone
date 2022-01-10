@@ -1,6 +1,6 @@
 ## Technologies
 
-NextJS + ExpressJS API for Vercel
+NextJS + ExpressJS API + mongodb for Vercel
 AntDesign
 
 ## Current issues
@@ -15,3 +15,8 @@ AntDesign
 ## More information
 
 1. Stop using localStorage to store liked, passed - It worked so I upgrade to use back-end and I got those 2 issues
+
+## Lesson
+
+1. Express + Vercel + MongoDB is not a really combo in my opinion - change my mind --> open a PR?
+2. Should have used heroku --> their time out is much longer?
