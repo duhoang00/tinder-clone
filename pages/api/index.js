@@ -1,9 +1,15 @@
 const express = require("express");
 import mongoose from "mongoose";
+const cors = require("cors");
+const bodyParser = require("body-parser");
 
 import { v4 } from "uuid";
 
 const app = express();
+app.use(cors());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
 const userRouter = require("./user");
 
 const connectToDb = () => {
