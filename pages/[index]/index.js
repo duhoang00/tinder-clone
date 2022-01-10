@@ -18,7 +18,9 @@ const App = () => {
         <Liked />
       ) : index === "passed" ? (
         <Passed />
-      ) : null}
+      ) : (
+        <div style={{ textAlign: "center" }}>Page not found</div>
+      )}
     </BaseLayout>
   );
 };

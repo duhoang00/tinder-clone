@@ -1,5 +1,4 @@
 ## Technologies
 
-NextJS
-ExpressJS
+NextJS + ExpressJS API for Vercel
 AntDesign

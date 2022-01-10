@@ -1,20 +1,30 @@
-const app = require("express")();
-const { v4 } = require("uuid");
+const express = require("express");
+import mongoose from "mongoose";
+
+import { v4 } from "uuid";
+
+const app = express();
+const userRouter = require("./user");
+
+const connectToDb = () => {
+  console.log("...connecting to database");
+  const uri = process.env.MONGODB_URI;
+  mongoose.connect(uri, { useNewUrlParser: true }, function (err) {
+    if (err) {
+      console.log("connecting to db failed");
+      console.log(err);
+    } else {
+      console.log("connecting to db is successful");
+    }
+  });
+};
+
+connectToDb();
 
 app.get("/api", (req, res) => {
-  const path = `/api/item/${v4()}`;
-  res.setHeader("Content-Type", "text/html");
-  res.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate");
-  res.end(`Hello! Go to item: <a href="${path}">${path}</a>`);
+  res.send("/");
 });
 
-app.get("/api/:item", (req, res) => {
-  res.end(`hehe`);
-});
-
-app.get("/api/item/:slug", (req, res) => {
-  const { slug } = req.params;
-  res.end(`Item: ${slug}`);
-});
+app.use(userRouter);
 
 module.exports = app;

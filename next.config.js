@@ -4,6 +4,6 @@ module.exports = withAntd({
   reactStrictMode: true,
   cssModules: true,
   images: {
-    domains: ["randomuser.me"],
+    domains: ["randomuser.me", "images.generated.photos"],
   },
 });
